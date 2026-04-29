@@ -51,9 +51,9 @@ WHERE OrderID = 1;
 
 TRUNCATE TABLE Orders;
 
-Takeaways (Task 2)
+Takeaways - 
   
-Practiced creating related tables using FOREIGN KEY
-Learned to apply constraints (PRIMARY KEY, UNIQUE, CHECK)
-Worked with INSERT, UPDATE, DELETE, TRUNCATE
-Understood relationship between Books and Orders tables
+- Practiced creating related tables using FOREIGN KEY
+- Learned to apply constraints (PRIMARY KEY, UNIQUE, CHECK)
+- Worked with INSERT, UPDATE, DELETE, TRUNCATE
+- Understood relationship between Books and Orders tables
