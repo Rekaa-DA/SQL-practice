@@ -1,0 +1,55 @@
+Task 2: Online Bookstore Database
+
+CREATE DATABASE OnlineBookstore;
+USE OnlineBookstore;
+
+CREATE TABLE Books(
+    BookID INT PRIMARY KEY, 
+    Title VARCHAR(100) NOT NULL, 
+    Author VARCHAR(50) NOT NULL,
+    ISBN VARCHAR(20) UNIQUE, 
+    Price DECIMAL(8,2) CHECK(Price > 0)
+);
+
+CREATE TABLE Orders( 
+    OrderID INT PRIMARY KEY,
+    BookID INT,
+    OrderDate DATE NOT NULL,
+    Quantity INT CHECK(Quantity > 0),
+    FOREIGN KEY (BookID) REFERENCES Books(BookID)
+);
+
+INSERT INTO Books(BookID, Title, Author, ISBN, Price)
+VALUES
+(1, 'Ponniyin Selvan', 'Kalki', 'ISBN001', 750),
+(2, 'Sivagamiyin Sabadham', 'Kalki', 'ISBN002', 650),
+(3, 'Parthiban Kanavu', 'Kalki', 'ISBN003', 550),
+(4, 'Vennira Aadai', 'Sujatha', 'ISBN004', 450),
+(5, 'En Iniya Iyanthira', 'Sujatha', 'ISBN005', 500);
+
+INSERT INTO Orders (OrderID, BookID, OrderDate, Quantity) 
+VALUES
+(1, 1, '2024-01-01', 2),
+(2, 2, '2024-01-02', 1),
+(3, 3, '2024-01-03', 3),
+(4, 4, '2024-01-04', 2),
+(5, 5, '2024-01-05', 5);
+
+SELECT * FROM Books;
+SELECT * FROM Orders;
+
+UPDATE Books
+SET Price = 850 
+WHERE BookID = 1;
+
+DELETE FROM Orders
+WHERE OrderID = 1;
+
+TRUNCATE TABLE Orders;
+
+Takeaways (Task 2)
+  
+Practiced creating related tables using FOREIGN KEY
+Learned to apply constraints (PRIMARY KEY, UNIQUE, CHECK)
+Worked with INSERT, UPDATE, DELETE, TRUNCATE
+Understood relationship between Books and Orders tables
