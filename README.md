@@ -1,2 +1,36 @@
 # SQL-practice
+
 My SQL practice tasks and queries
+
+Task:1  Hospital Database Operations
+
+Operations performed
+- Created database and table
+- Added and modified columns
+- Renamed table
+- Used TRUNCATE and DROP
+
+```sql
+CREATE DATABASE Hospital;
+USE Hospital;
+
+CREATE TABLE Patients(
+    PatientID INT,
+    PatientName VARCHAR(15),
+    Age INT,
+    Gender VARCHAR(10),
+    AdmissionDate DATE
+);
+
+ALTER TABLE Patients ADD COLUMN DoctorAssigned VARCHAR(50);
+ALTER TABLE Patients MODIFY PatientName VARCHAR(100);
+RENAME TABLE Patients TO Patients_Info;
+
+TRUNCATE TABLE Patients_Info;
+DROP TABLE Patients_Info;
+
+Takeaways (DDL Task)
+
+- CREATE, ALTER, RENAME, TRUNCATE, DROP
+- Table structure modification
+- Data vs table deletion concepts
