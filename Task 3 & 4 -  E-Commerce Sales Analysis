@@ -60,9 +60,10 @@ SELECT product_id, product_name, price,
 RANK() OVER (ORDER BY price DESC)
 FROM Product;
 
-Takeaways
-Used aggregate functions (SUM, MAX, MIN, COUNT)
-Applied GROUP BY and HAVING
-Sorted and filtered data using ORDER BY and LIMIT
-Learned window function RANK()
-Performed basic sales analysis
+Takeaways :
+
+- Used aggregate functions (SUM, MAX, MIN, COUNT)
+- Applied GROUP BY and HAVING
+- Sorted and filtered data using ORDER BY and LIMIT
+- Learned window function RANK()
+- Performed basic sales analysis
