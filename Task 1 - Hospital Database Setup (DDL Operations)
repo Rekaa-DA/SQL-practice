@@ -29,7 +29,7 @@ RENAME TABLE Patients TO Patients_Info;
 TRUNCATE TABLE Patients_Info;
 DROP TABLE Patients_Info;
 
-Takeaways (DDL Task)
+Takeaways :
 
 - CREATE, ALTER, RENAME, TRUNCATE, DROP
 - Table structure modification
