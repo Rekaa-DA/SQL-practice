@@ -1,0 +1,285 @@
+Perfect 👍 since it’s a **SQL practice repo**, your README should be:
+
+✔ Clean
+✔ Complete
+✔ Contains syntax
+✔ But still readable
+
+Not messy full dump, but **all questions included properly**
+
+---
+
+# 📘 SQL PRACTICE README (READY TO USE)
+
+## 🧠 SQL Practice Repository
+
+This repository contains a **complete SQL practice set (20+ interview-level questions)** using a sample company database.
+
+It is designed for **learning SQL concepts step-by-step with real queries**.
+
+---
+
+## 🗄️ Database Name
+
+```sql id="db1"
+SQL_COMPANY_DB
+```
+
+---
+
+## 📦 Tables Used
+
+* Departments
+* Employees
+* Customers
+* Products
+* Orders
+* Sales
+* MonthlySales
+* SalesTeam
+
+---
+
+## 🎯 Concepts Practiced
+
+✔ SELECT queries
+✔ WHERE filtering
+✔ JOIN (INNER, LEFT)
+✔ GROUP BY & HAVING
+✔ Aggregate functions
+✔ Subqueries
+✔ Window functions (LAG)
+✔ Date functions
+
+---
+
+# 🧪 SQL PRACTICE QUESTIONS
+
+---
+
+## 🔹 1. Find duplicate customer records
+
+```sql id="q1"
+SELECT customer_name, email
+FROM Customers
+GROUP BY customer_name, email
+HAVING COUNT(*) > 1;
+```
+
+---
+
+## 🔹 2. Replace NULL salaries with 0
+
+```sql id="q2"
+UPDATE Employees
+SET salary = 0
+WHERE salary IS NULL;
+```
+
+---
+
+## 🔹 3. Top 5 highest-paid employees
+
+```sql id="q3"
+SELECT emp_name, salary
+FROM Employees
+ORDER BY salary DESC
+LIMIT 5;
+```
+
+---
+
+## 🔹 4. Employees whose names start with 'A'
+
+```sql id="q4"
+SELECT emp_name
+FROM Employees
+WHERE emp_name LIKE 'A%';
+```
+
+---
+
+## 🔹 5. Orders between two dates
+
+```sql id="q5"
+SELECT *
+FROM Orders
+WHERE order_date BETWEEN '2025-01-01' AND '2025-03-31';
+```
+
+---
+
+## 🔹 6. Employee with department name
+
+```sql id="q6"
+SELECT e.emp_name, d.dept_name
+FROM Employees e
+LEFT JOIN Departments d
+ON e.dept_id = d.dept_id;
+```
+
+---
+
+## 🔹 7. Employees without department
+
+```sql id="q7"
+SELECT emp_name
+FROM Employees
+WHERE dept_id IS NULL;
+```
+
+---
+
+## 🔹 8. Departments without employees
+
+```sql id="q8"
+SELECT d.dept_name, e.emp_name
+FROM Departments d
+LEFT JOIN Employees e
+ON d.dept_id = e.dept_id;
+```
+
+---
+
+## 🔹 9. Customers who did not place orders
+
+```sql id="q9"
+SELECT customer_id
+FROM Customers
+WHERE customer_id NOT IN (SELECT customer_id FROM Orders);
+```
+
+---
+
+## 🔹 10. Customers with & without orders
+
+```sql id="q10"
+SELECT c.customer_name, o.order_id
+FROM Customers c
+LEFT JOIN Orders o
+ON c.customer_id = o.customer_id;
+```
+
+---
+
+## 🔹 11. Month-wise total sales
+
+```sql id="q11"
+SELECT MONTH(order_date) AS month,
+       SUM(amount) AS total_sales
+FROM Sales
+GROUP BY MONTH(order_date);
+```
+
+---
+
+## 🔹 12. Department-wise average salary
+
+```sql id="q12"
+SELECT dept_id, AVG(salary)
+FROM Employees
+GROUP BY dept_id;
+```
+
+---
+
+## 🔹 13. Department with max employees
+
+```sql id="q13"
+SELECT d.dept_name, COUNT(*) AS emp_count
+FROM Departments d
+LEFT JOIN Employees e
+ON d.dept_id = e.dept_id
+GROUP BY d.dept_name
+ORDER BY emp_count DESC
+LIMIT 1;
+```
+
+---
+
+## 🔹 14. Second highest salary
+
+```sql id="q14"
+SELECT DISTINCT salary
+FROM Employees
+ORDER BY salary DESC
+LIMIT 1 OFFSET 1;
+```
+
+---
+
+## 🔹 15. Duplicate emails
+
+```sql id="q15"
+SELECT email
+FROM Customers
+GROUP BY email
+HAVING COUNT(*) > 1;
+```
+
+---
+
+## 🔹 16. Compare this month vs last month sales
+
+```sql id="q16"
+SELECT month, sales,
+       LAG(sales) OVER (ORDER BY month)
+FROM MonthlySales;
+```
+
+---
+
+## 🔹 17. Top 3 products by revenue
+
+```sql id="q17"
+SELECT p.product_name,
+       SUM(s.amount) AS revenue
+FROM Products p
+JOIN Sales s
+ON p.product_id = s.product_id
+GROUP BY p.product_name
+ORDER BY revenue DESC
+LIMIT 3;
+```
+
+---
+
+## 🔹 18. City with highest customers
+
+```sql id="q18"
+SELECT city, COUNT(*) AS total
+FROM Customers
+GROUP BY city
+ORDER BY total DESC
+LIMIT 1;
+
+## 🔹 19. Customers with more than 5 orders
+
+```sql id="q19"
+SELECT customer_id,
+       COUNT(*) AS order_count
+FROM Orders
+GROUP BY customer_id
+HAVING COUNT(*) > 5;
+
+## 🔹 20. Inactive customers (last 6 months)
+
+```sql id="q20"
+SELECT c.customer_name,
+       MAX(o.order_date)
+FROM Customers c
+LEFT JOIN Orders o
+ON c.customer_id = o.customer_id
+GROUP BY c.customer_id, c.customer_name
+HAVING MAX(o.order_date) < DATE_SUB(CURDATE(), INTERVAL 6 MONTH);
+
+Takeaway :
+
+Understood how to use JOINs to combine multiple tables
+Learned proper use of GROUP BY and HAVING
+Improved knowledge of aggregate functions like SUM, COUNT, MAX, AVG
+Learned how to handle NULL values in queries
+Practiced date functions like CURDATE and DATE_SUB
+Understood how window functions like LAG work
+Improved ability to solve real-world SQL problems step by step
+Gained confidence in writing interview-level SQL queries
