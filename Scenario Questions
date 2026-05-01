@@ -1,31 +1,10 @@
-Perfect 👍 since it’s a **SQL practice repo**, your README should be:
-
-✔ Clean
-✔ Complete
-✔ Contains syntax
-✔ But still readable
-
-Not messy full dump, but **all questions included properly**
-
----
-
-# 📘 SQL PRACTICE README (READY TO USE)
-
-## 🧠 SQL Practice Repository
+SQL Practice Repository
 
 This repository contains a **complete SQL practice set (20+ interview-level questions)** using a sample company database.
 
-It is designed for **learning SQL concepts step-by-step with real queries**.
+🗄️ Database Name
 
----
-
-## 🗄️ Database Name
-
-```sql id="db1"
 SQL_COMPANY_DB
-```
-
----
 
 ## 📦 Tables Used
 
@@ -38,9 +17,7 @@ SQL_COMPANY_DB
 * MonthlySales
 * SalesTeam
 
----
-
-## 🎯 Concepts Practiced
+🎯 Concepts Practiced
 
 ✔ SELECT queries
 ✔ WHERE filtering
@@ -51,55 +28,39 @@ SQL_COMPANY_DB
 ✔ Window functions (LAG)
 ✔ Date functions
 
----
+🧪 SQL PRACTICE QUESTIONS
 
-# 🧪 SQL PRACTICE QUESTIONS
-
----
-
-## 🔹 1. Find duplicate customer records
+🔹 1. Find duplicate customer records
 
 ```sql id="q1"
 SELECT customer_name, email
 FROM Customers
 GROUP BY customer_name, email
 HAVING COUNT(*) > 1;
-```
 
----
-
-## 🔹 2. Replace NULL salaries with 0
+🔹 2. Replace NULL salaries with 0
 
 ```sql id="q2"
 UPDATE Employees
 SET salary = 0
 WHERE salary IS NULL;
-```
 
----
-
-## 🔹 3. Top 5 highest-paid employees
+🔹 3. Top 5 highest-paid employees
 
 ```sql id="q3"
 SELECT emp_name, salary
 FROM Employees
 ORDER BY salary DESC
 LIMIT 5;
-```
 
----
-
-## 🔹 4. Employees whose names start with 'A'
+🔹 4. Employees whose names start with 'A'
 
 ```sql id="q4"
 SELECT emp_name
 FROM Employees
 WHERE emp_name LIKE 'A%';
-```
 
----
-
-## 🔹 5. Orders between two dates
+5. Orders between two dates
 
 ```sql id="q5"
 SELECT *
