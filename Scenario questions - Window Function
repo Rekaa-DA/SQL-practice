@@ -1,0 +1,98 @@
+SQL Window Functions 
+
+This section contains SQL window function examples used for ranking, running totals, comparisons, and deduplication logic in large datasets.
+
+21. Rank Employees Based on Salary
+
+```sql
+SELECT emp_name, salary,
+DENSE_RANK() OVER (ORDER BY salary DESC) AS salary_rank
+FROM employees;
+```
+
+Concept Used:
+
+* `DENSE_RANK()`
+* Ranking without gaps
+
+Output Idea:
+
+Highest salary gets rank 1, equal salaries share same rank.
+
+22. Running Total of Sales by Date
+
+```sql
+SELECT order_date,
+SUM(amount) OVER (ORDER BY order_date) AS running_total
+FROM sales;
+```
+
+Concept Used:
+
+* Cumulative sum
+* Ordered aggregation
+
+23. Previous Month Sales Using LAG()
+
+```sql
+SELECT month, sales,
+LAG(sales) OVER (ORDER BY month) AS prev_month_sales
+FROM monthlysales;
+```
+
+Concept Used:
+
+* `LAG()` → previous row value
+
+
+4. Top Performer in Each Region
+
+Method 1: Using RANK()
+
+```sql
+SELECT emp_name, region, sales,
+RANK() OVER (PARTITION BY region ORDER BY sales DESC) AS rnk
+FROM salesteam;
+
+Method 2: Best Practice (ROW_NUMBER)
+
+```sql
+SELECT emp_name, region, sales
+FROM (
+    SELECT emp_name, region, sales,
+    ROW_NUMBER() OVER (PARTITION BY region ORDER BY sales DESC) AS rn
+    FROM salesteam
+) t
+WHERE rn = 1;
+
+Concept Used:
+
+* `PARTITION BY region`
+* Top 1 selection per group
+
+25. Remove Duplicate Customer Records (Keep Latest)
+
+```sql
+SELECT *
+FROM (
+    SELECT customer_name, customer_id, email, city,
+    ROW_NUMBER() OVER (PARTITION BY email ORDER BY customer_id DESC) AS rn
+    FROM customers
+) t
+WHERE rn = 1;
+
+Concept Used:
+
+* Deduplication using window function
+* Keeping latest record per email
+
+
+📌 Key Takeaways
+
+* `ROW_NUMBER()` → unique ranking (best for filtering duplicates)
+* `RANK()` → ranking with gaps
+* `DENSE_RANK()` → ranking without gaps
+* `LAG()` → previous row comparison
+* `SUM() OVER()` → running total
+
+
