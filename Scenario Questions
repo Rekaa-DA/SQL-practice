@@ -66,7 +66,8 @@ WHERE emp_name LIKE 'A%';
 SELECT *
 FROM Orders
 WHERE order_date BETWEEN '2025-01-01' AND '2025-03-31';
-🔹 6. Employee with department name
+
+6. Employee with department name
 
 ```sql id="q6"
 SELECT e.emp_name, d.dept_name
