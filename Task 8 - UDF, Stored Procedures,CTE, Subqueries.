@@ -1,0 +1,143 @@
+SQL COMPANY DATABASE – UDF, STORED PROCEDURE, CTE AND SUBQUERY PRACTICE
+
+Syntax Covered:
+
+USE
+DELIMITER
+CREATE FUNCTION
+RETURNS
+DETERMINISTIC
+RETURN
+CREATE PROCEDURE
+BEGIN
+END
+CASE
+WHEN
+THEN
+ELSE
+SELECT
+WHERE
+JOIN
+GROUP BY
+AVG()
+MAX()
+IN
+ANY
+WITH
+CTE
+SUBQUERY
+SINGLE-ROW SUBQUERY
+MULTI-ROW SUBQUERY
+NESTED SUBQUERY
+
+Functions Practiced:
+
+1. User Defined Function (UDF)
+
+CREATE FUNCTION GetBonus(salary DECIMAL(15,2))
+RETURNS DECIMAL(15,2)
+DETERMINISTIC
+BEGIN
+RETURN salary * 0.10;
+END;
+
+2. Single-Row Subquery
+
+SELECT emp_name, salary
+FROM employees
+WHERE salary > (
+    SELECT AVG(salary)
+    FROM employees
+);
+
+3. Multi-Row Subquery Using IN
+
+SELECT emp_name, dept_id
+FROM employees
+WHERE dept_id IN (
+    SELECT dept_id
+    FROM employees
+    WHERE city IN ('PUNE', 'HYDERABAD')
+);
+
+4. Stored Procedure
+
+CREATE PROCEDURE UpdateSalaryByPerformance()
+
+BEGIN
+
+UPDATE employees
+SET salary =
+CASE
+
+    WHEN performance_rating = 5
+    THEN salary + (salary * 0.20)
+
+    WHEN performance_rating = 4
+    THEN salary + (salary * 0.10)
+
+    WHEN performance_rating = 3
+    THEN salary + (salary * 0.05)
+
+    ELSE salary
+
+END;
+
+END;
+
+5. CTE Practice
+
+WITH AvgDeptSalary AS
+(
+    SELECT
+        D.dept_name AS DeptName,
+        AVG(E.salary) AS AvgSalary
+    FROM employees AS E
+    JOIN departments AS D
+    ON E.dept_id = D.dept_id
+    GROUP BY D.dept_name
+)
+
+SELECT *
+FROM AvgDeptSalary
+WHERE AvgSalary > 65000;
+
+6. ANY Operator with Nested Subquery
+
+SELECT emp_name, salary
+FROM employees
+WHERE salary > ANY
+(
+    SELECT salary
+    FROM employees
+    WHERE dept_id =
+    (
+        SELECT dept_id
+        FROM departments
+        WHERE dept_name = 'HR'
+    )
+);
+
+7. Nested Subquery
+
+SELECT
+E.emp_name AS EmpName,
+D.dept_name AS DeptName,
+E.salary AS Salary
+FROM employees AS E
+JOIN departments AS D
+ON E.dept_id = D.dept_id
+
+WHERE E.salary =
+(
+    SELECT MAX(E2.salary)
+    FROM employees AS E2
+    WHERE E2.dept_id = E.dept_id
+);
+
+Takeaways:
+
+This project helped improve understanding of User Defined Functions (UDF), Stored Procedures, Common Table Expressions (CTE), and different types of SQL subqueries. 
+Practiced single-row, multi-row, correlated, and nested subqueries using aggregate functions like AVG() and MAX(). 
+Learned how to use IN and ANY operators, implement conditional salary updates using CASE statements, and create reusable SQL logic using functions and procedures in MySQL.
+
