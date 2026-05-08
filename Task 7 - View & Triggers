@@ -1,0 +1,245 @@
+SQL COMPANY DATABASE – VIEWS AND TRIGGERS PRACTICE
+
+Views Practiced:
+
+1. Simple View
+
+CREATE VIEW Employeebasicview AS
+SELECT emp_name, dept_id, salary
+FROM employees;
+
+2. Complex View with JOIN
+
+CREATE VIEW EmployeeDepartmentView AS
+SELECT e.emp_name,
+       e.salary,
+       e.city,
+       d.dept_name
+FROM employees AS e
+JOIN departments AS d
+ON e.dept_id = d.dept_id;
+
+3. Aggregate View
+
+CREATE VIEW DeptSalaryStat AS
+SELECT d.dept_name AS deptname,
+       AVG(e.salary) AS AvgSalary,
+       COUNT(e.emp_name) AS TotalEmployees
+FROM departments AS d
+JOIN employees AS e
+ON e.dept_id = d.dept_id
+GROUP BY d.dept_name;
+
+4. Update Through View
+
+UPDATE Employeebasicview
+SET salary = salary + 5000;
+
+Triggers Practiced:
+
+1. BEFORE INSERT Trigger
+
+CREATE TRIGGER check_min_salary
+BEFORE INSERT ON employees
+FOR EACH ROW
+BEGIN
+IF NEW.salary < 30000 THEN
+SIGNAL SQLSTATE '45000'
+SET MESSAGE_TEXT = 'Salary must be at least 30000';
+END IF;
+END;
+
+2. AFTER INSERT Trigger
+
+CREATE TRIGGER log_employee_insert
+AFTER INSERT ON employees
+FOR EACH ROW
+BEGIN
+INSERT INTO EmployeeAudit
+(EmpID, EmpName, Action, ActionDate)
+VALUES
+(NEW.emp_id, NEW.emp_name, 'INSERT', NOW());
+END;
+
+3. AFTER UPDATE Trigger
+
+CREATE TRIGGER log_salary_change
+AFTER UPDATE ON employees
+FOR EACH ROW
+BEGIN
+IF OLD.salary <> NEW.salary THEN
+INSERT INTO SalaryLog
+(EmpID, OldSalary, NewSalary, ChangeDate)
+VALUES
+(OLD.emp_id, OLD.salary, NEW.salary, NOW());
+END IF;
+END;
+
+4. BEFORE DELETE Trigger
+
+CREATE TRIGGER prevent_it_delete
+BEFORE DELETE ON employees
+FOR EACH ROW
+BEGIN
+IF OLD.dept_id = (
+    SELECT dept_id
+    FROM departments
+    WHERE dept_name = 'IT'
+) THEN
+SIGNAL SQLSTATE '45000'
+SET MESSAGE_TEXT = 'Cannot delete employees from IT department';
+END IF;
+END;
+
+5. AFTER DELETE Trigger
+
+CREATE TRIGGER archive_deleted_employee
+AFTER DELETE ON employees
+FOR EACH ROW
+BEGIN
+INSERT INTO EmployeeArchive
+(EmpID, EmpName, DeptID, Salary, ExitDate)
+VALUES
+(OLD.emp_id, OLD.emp_name, OLD.dept_id, OLD.salary, NOW());
+END;
+
+Takeaways:
+
+This project helped improve understanding of SQL Views and Triggers using real-world HR and employee management scenarios. Practiced creating simple, complex, and aggregate views with JOIN and GROUP BY operations. Learned how to implement BEFORE and AFTER triggers for INSERT, UPDATE, and DELETE actions using NEW and OLD keywords. Improved understanding of automation, validation, audit logging, salary tracking, and data protection concepts in MySQL.
+```
+
+USE
+CREATE VIEW
+SELECT
+JOIN
+INNER JOIN
+GROUP BY
+AVG()
+COUNT()
+UPDATE
+DROP VIEW
+SET SQL_SAFE_UPDATES
+CREATE TRIGGER
+BEFORE INSERT
+AFTER INSERT
+AFTER UPDATE
+BEFORE DELETE
+FOR EACH ROW
+IF
+SIGNAL SQLSTATE
+DELIMITER
+NEW
+OLD
+NOW()
+SHOW TRIGGERS
+CREATE TABLE
+
+Views Practiced:
+
+1. Simple View
+
+CREATE VIEW Employeebasicview AS
+SELECT emp_name, dept_id, salary
+FROM employees;
+
+2. Complex View with JOIN
+
+CREATE VIEW EmployeeDepartmentView AS
+SELECT e.emp_name,
+       e.salary,
+       e.city,
+       d.dept_name
+FROM employees AS e
+JOIN departments AS d
+ON e.dept_id = d.dept_id;
+
+3. Aggregate View
+
+CREATE VIEW DeptSalaryStat AS
+SELECT d.dept_name AS deptname,
+       AVG(e.salary) AS AvgSalary,
+       COUNT(e.emp_name) AS TotalEmployees
+FROM departments AS d
+JOIN employees AS e
+ON e.dept_id = d.dept_id
+GROUP BY d.dept_name;
+
+4. Update Through View
+
+UPDATE Employeebasicview
+SET salary = salary + 5000;
+
+Triggers Practiced:
+
+1. BEFORE INSERT Trigger
+
+CREATE TRIGGER check_min_salary
+BEFORE INSERT ON employees
+FOR EACH ROW
+BEGIN
+IF NEW.salary < 30000 THEN
+SIGNAL SQLSTATE '45000'
+SET MESSAGE_TEXT = 'Salary must be at least 30000';
+END IF;
+END;
+
+2. AFTER INSERT Trigger
+
+CREATE TRIGGER log_employee_insert
+AFTER INSERT ON employees
+FOR EACH ROW
+BEGIN
+INSERT INTO EmployeeAudit
+(EmpID, EmpName, Action, ActionDate)
+VALUES
+(NEW.emp_id, NEW.emp_name, 'INSERT', NOW());
+END;
+
+3. AFTER UPDATE Trigger
+
+CREATE TRIGGER log_salary_change
+AFTER UPDATE ON employees
+FOR EACH ROW
+BEGIN
+IF OLD.salary <> NEW.salary THEN
+INSERT INTO SalaryLog
+(EmpID, OldSalary, NewSalary, ChangeDate)
+VALUES
+(OLD.emp_id, OLD.salary, NEW.salary, NOW());
+END IF;
+END;
+
+4. BEFORE DELETE Trigger
+
+CREATE TRIGGER prevent_it_delete
+BEFORE DELETE ON employees
+FOR EACH ROW
+BEGIN
+IF OLD.dept_id = (
+    SELECT dept_id
+    FROM departments
+    WHERE dept_name = 'IT'
+) THEN
+SIGNAL SQLSTATE '45000'
+SET MESSAGE_TEXT = 'Cannot delete employees from IT department';
+END IF;
+END;
+
+5. AFTER DELETE Trigger
+
+CREATE TRIGGER archive_deleted_employee
+AFTER DELETE ON employees
+FOR EACH ROW
+BEGIN
+INSERT INTO EmployeeArchive
+(EmpID, EmpName, DeptID, Salary, ExitDate)
+VALUES
+(OLD.emp_id, OLD.emp_name, OLD.dept_id, OLD.salary, NOW());
+END;
+
+Takeaways:
+
+This project helped improve understanding of SQL Views and Triggers using real-world HR and employee management scenarios.
+Practiced creating simple, complex, and aggregate views with JOIN and GROUP BY operations. 
+Learned how to implement BEFORE and AFTER triggers for INSERT, UPDATE, and DELETE actions using NEW and OLD keywords. 
+Improved understanding of automation, validation, audit logging, salary tracking, and data protection concepts in MySQL.
