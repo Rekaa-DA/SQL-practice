@@ -1,0 +1,132 @@
+SQL COMPANY DATABASE – SUBQUERY PRACTICE
+
+Queries Practiced:
+
+1. Find employees whose salary is greater than the average salary of all employees.
+
+SELECT *
+FROM Employees
+WHERE salary > (
+    SELECT AVG(salary)
+    FROM Employees
+);
+
+2. Find employees who earn more than Ravi.
+
+SELECT emp_name, salary
+FROM Employees
+WHERE salary > (
+    SELECT salary
+    FROM Employees
+    WHERE emp_name = 'Ravi'
+);
+
+3. Find employees whose salary is greater than the average salary of the IT department.
+
+SELECT emp_name, salary
+FROM Employees
+WHERE salary > (
+    SELECT AVG(E.salary)
+    FROM Employees AS E
+    JOIN Departments AS D
+    ON E.dept_id = D.dept_id
+    WHERE D.dept_name = 'IT'
+);
+
+4. Find employees who work in Chennai or Bangalore.
+
+SELECT emp_name
+FROM Employees
+WHERE city IN (
+    SELECT city
+    FROM Employees
+    WHERE city IN ('CHENNAI', 'BANGALORE')
+);
+
+5. Find employees whose salary is greater than all employees in the HR department.
+
+SELECT emp_name, salary
+FROM Employees
+WHERE salary > ALL (
+    SELECT E.salary
+    FROM Employees AS E
+    JOIN Departments AS D
+    ON E.dept_id = D.dept_id
+    WHERE D.dept_name = 'HR'
+);
+
+6. Find employees whose salary is greater than any employee in their department.
+
+SELECT emp_name, salary, dept_id
+FROM Employees AS E
+WHERE salary > ANY (
+    SELECT salary
+    FROM Employees
+    WHERE dept_id = E.dept_id
+);
+
+7. Find employees whose salary is greater than the average salary of their department.
+
+SELECT emp_name, salary
+FROM Employees AS E
+WHERE salary > (
+    SELECT AVG(salary)
+    FROM Employees
+    WHERE dept_id = E.dept_id
+);
+
+8. Find employees who earn the highest salary in their department.
+
+SELECT emp_name, salary
+FROM Employees AS E
+WHERE salary = (
+    SELECT MAX(salary)
+    FROM Employees
+    WHERE dept_id = E.dept_id
+);
+
+9. Find employees whose salary is less than the maximum salary in their department.
+
+SELECT emp_name, salary
+FROM Employees AS E
+WHERE salary < (
+    SELECT MAX(salary)
+    FROM Employees
+    WHERE dept_id = E.dept_id
+);
+
+10. Find employees whose salary is equal to the minimum salary in their department.
+
+SELECT emp_name, dept_id, salary
+FROM Employees AS E
+WHERE salary = (
+    SELECT MIN(salary)
+    FROM Employees
+    WHERE dept_id = E.dept_id
+);
+
+11. Find departments having employees with salary greater than 70000.
+
+SELECT DISTINCT dept_id, salary
+FROM Employees
+WHERE dept_id IN (
+    SELECT dept_id
+    FROM Employees
+    WHERE salary > 70000
+);
+
+12. Find departments with only one employee.
+
+SELECT emp_name, dept_id, salary
+FROM Employees AS E
+WHERE (
+    SELECT COUNT(*)
+    FROM Employees
+    WHERE dept_id = E.dept_id
+) = 1;
+
+Takeaways:
+
+This project helped improve understanding of SQL subqueries using real-world business scenarios.
+Practiced single-row, multi-row, correlated, and nested subqueries with aggregate functions such as AVG(), MAX(), MIN(), and COUNT(). 
+Learned how to use IN, ANY, and ALL operators effectively along with JOIN operations and department-wise salary analysis using MySQL.
